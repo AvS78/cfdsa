@@ -1,0 +1,35 @@
+version: '3'
+
+volumes:
+    nwvol:
+
+networks:
+    nwnet:
+
+
+services:
+    nwdb:
+        image: avs78/nwdb:v1
+        build:
+            context: ./database
+        environment: 
+        - MYSQL_ROOT_PASSWORD=chageit
+        networks:
+        - nwnet
+        volumes:
+        - nwvol:/var/lib/mysql
+    
+    nwapp:
+        image: avs78/nwapp:v1
+        build:
+            context: ./server
+        environment: 
+        - DB_HOST=nwdb
+        - DB_PORT=3306
+        - DB_USER=root
+        - DB_PASSWORD=changeit
+        networks:
+        - nwnet
+        ports:
+        - 80:3000
+
