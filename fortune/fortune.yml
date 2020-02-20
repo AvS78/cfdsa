@@ -1,0 +1,34 @@
+#no tabs
+#first mandatory declarations
+apiVersion: v1
+kind: Pod
+metadata:
+    name: fortune-pod
+    namespace: default
+    labels:
+        name: fortune-app
+        tier: web
+        version: "v1"
+#first mandatory declarations finished
+
+spec:
+    containers:
+        - name: fortune-container
+          image: stackupiss/fortune:v1
+          imagePullPolicy: Always
+          env:
+            - name: APP_PORT
+              value: "8080"
+          ports:
+            - name: http
+              containerPort: 3000
+          resources:
+            requests:
+                cpu: .25
+                memory: "64Mi"
+            limits:
+                cpu: .25
+                memory: "64Mi" 
+        
+
+
